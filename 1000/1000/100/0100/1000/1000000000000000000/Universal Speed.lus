@@ -1,0 +1,129 @@
+repeat task.wait() until game:IsLoaded()
+print("Subscribe to Breed AO")
+
+local gui = Instance.new("ScreenGui")
+local frame = Instance.new("Frame")
+local corner = Instance.new("UICorner")
+local title = Instance.new("TextLabel")
+local kska = Instance.new("UICorner")
+local box = Instance.new("TextBox")
+local poo = Instance.new("UICorner")
+local jpbox = Instance.new("TextBox")
+local haahaa = Instance.new("UICorner")
+local toggleButton = Instance.new("TextButton")
+local buttonCorner = Instance.new("UICorner")
+local indicator = Instance.new("Frame")
+local indicatorCorner = Instance.new("UICorner")
+local infJumpLabel = Instance.new("TextLabel")
+
+gui.Parent = game.CoreGui
+
+frame.Parent = gui
+frame.Size = UDim2.new(0, 400, 0, 350)
+frame.Position = UDim2.new(0.5, -200, 0.5, -175)
+frame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+frame.Active = true
+frame.Draggable = true
+
+corner.Parent = frame
+corner.CornerRadius = UDim.new(0, 12)
+
+title.Parent = frame
+title.Size = UDim2.new(1, 0, 0, 50)
+title.Position = UDim2.new(0, 0, 0, 0)
+title.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+title.Text = "Subscribe to Breed AO"
+title.TextColor3 = Color3.fromRGB(255, 255, 255)
+title.Font = Enum.Font.Gotham
+title.TextSize = 24
+title.TextScaled = true
+
+kska.Parent = title
+kska.CornerRadius = UDim.new(0, 12)
+
+box.Parent = frame
+box.Size = UDim2.new(1, -20, 0, 50)
+box.Position = UDim2.new(0, 10, 0, 60)
+box.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+box.PlaceholderText = "Speed"
+box.Font = Enum.Font.Gotham
+box.TextSize = 18
+box.TextScaled = true
+box.TextColor3 = Color3.fromRGB(255, 255, 255)
+box.PlaceholderColor3 = Color3.fromRGB(200, 200, 200)
+box.FocusLost:Connect(function()
+    game:GetService("Players").LocalPlayer.Character.Humanoid.WalkSpeed = tonumber(box.Text)
+end)
+
+poo.Parent = box
+poo.CornerRadius = UDim.new(0, 12)
+
+jpbox.Parent = frame
+jpbox.Size = UDim2.new(1, -20, 0, 50)
+jpbox.Position = UDim2.new(0, 10, 0, 120)
+jpbox.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+jpbox.PlaceholderText = "Jump Power"
+jpbox.Font = Enum.Font.Gotham
+jpbox.TextSize = 18
+jpbox.TextScaled = true
+jpbox.TextColor3 = Color3.fromRGB(255, 255, 255)
+jpbox.PlaceholderColor3 = Color3.fromRGB(200, 200, 200)
+jpbox.FocusLost:Connect(function()
+    game:GetService("Players").LocalPlayer.Character.Humanoid.UseJumpPower = true
+    game:GetService("Players").LocalPlayer.Character.Humanoid.JumpPower = tonumber(jpbox.Text)
+end)
+
+haahaa.Parent = jpbox
+haahaa.CornerRadius = UDim.new(0, 12)
+
+toggleButton.Parent = frame
+toggleButton.Size = UDim2.new(1, -20, 0, 50)
+toggleButton.Position = UDim2.new(0, 10, 0, 180)
+toggleButton.BackgroundColor3 = Color3.fromRGB(30, 60, 30)
+toggleButton.Text = ""
+toggleButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+toggleButton.Font = Enum.Font.Gotham
+toggleButton.TextSize = 18
+toggleButton.TextScaled = true
+
+buttonCorner.Parent = toggleButton
+buttonCorner.CornerRadius = UDim.new(0, 12)
+
+indicator.Parent = toggleButton
+indicator.Size = UDim2.new(0, 30, 0, 30)
+indicator.Position = UDim2.new(0, 10, 0.5, -15)
+indicator.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+indicator.BorderSizePixel = 2
+indicator.BorderColor3 = Color3.fromRGB(255, 0, 0)
+
+indicatorCorner.Parent = indicator
+indicatorCorner.CornerRadius = UDim.new(0, 6)
+
+infJumpLabel.Parent = toggleButton
+infJumpLabel.Size = UDim2.new(0, 100, 0, 30)
+infJumpLabel.Position = UDim2.new(0, 50, 0.5, -15)
+infJumpLabel.BackgroundTransparency = 1
+infJumpLabel.Text = "InfJump"
+infJumpLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+infJumpLabel.Font = Enum.Font.Gotham
+infJumpLabel.TextSize = 18
+infJumpLabel.TextScaled = true
+
+local infiniteJumpEnabled = false
+
+local function onToggle()
+    infiniteJumpEnabled = not infiniteJumpEnabled
+    if infiniteJumpEnabled then
+        indicator.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+    else
+        indicator.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    end
+end
+
+toggleButton.MouseButton1Click:Connect(onToggle)
+
+game:GetService("UserInputService").JumpRequest:Connect(function()
+    if infiniteJumpEnabled then
+        game:GetService("Players").LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):ChangeState("Jumping")
+    end
+end)
